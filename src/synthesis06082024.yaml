@@ -1,0 +1,3323 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 6na8o44h1lc3e
+info:
+  title: Apcopay Synthesis Pre-Prod
+  contact:
+    name: Apcopay Support
+    url: 'https://www.apcopay.com/'
+    email: support@apcopay.com
+  version: 0.2.6
+  termsOfService: 'https://www.apcopay.com/disclaimer'
+  description: "# Provider Quick Reference\r\n\r\n|Payment Provider| Hosted Payment Page| Direct Connect| Supported Transaction Types | Doc Link |\r\n|--|--|--|--|--|\r\n| Asia Bank Transfer | &check; | &cross; | Purchase, Withdrawals | [Here](https://docs.apcopay.com/docs/asia-bank-transfer)|\r\n| Cashlib | &check; | &cross; | Purchase | [Here](https://docs.apcopay.com/docs/cashlib) |\r\n| eZeeWallet | &check; | &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/ezeewallet) |\r\n| JPAY - Automated Transfers | &check; | &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/jpay-automated-transfers) |\r\n| Mpay Cards | &check; | &check; | Purchase | [Here](https://docs.apcopay.com/docs/mpay-cards)|\r\n| Mpay Payment Options | &check; | &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/mpay-po) |\r\n| Neosurf | &check; | &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/neosurf) |\r\n| Multibanco via Eupago | &check; | &cross; | Purchase | [Here](https://docs.apcopay.com/docs/cashlib) |\r\n| Orange Money (Liberia)\t  | &check;| &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/orange-mobile-liberia)|\r\n| Papara via Pay Primo | &check; | &cross; | Purchase, Withdrawal | [Here](https://docs.apcopay.com/docs/papara-via-pay-primo) |\r\n| Paysafecard via Trust | &check; | &cross; | Purchase | [Here](https://docs.apcopay.com/docs/paysafecard-via-trust) |\r\n| Pay Primo Cards | &check; | &check; | Purchase | [Here](https://docs.apcopay.com/docs/payprimo-card-processing) |\r\n| Prompt Pay | &check; | &cross; | Purchase | [Here](https://docs.apcopay.com/docs/prompt-pay) |\r\n\r\n# Change Log\r\nVersion | Methods | Change Details | Release Date\r\n---------|----------|---------|--------------\r\n  0.2.6 | Get Account Payout Balance | Update Payout Balance Payload | 25/07/2024\r\n  0.2.5 | Get Account Payout Balance | Introduced Account Payout Balance Section | 24/07/2024\r\n  0.2.4 | All Methods | Streamlined Models and definitions | 29/06/2024\r\n  0.2.3 | Request Payment or Payout | Updated full payload requirements for ApplePay GooglePay objects | 22/05/2024\r\n  0.2.2 | Get Payment Response | Introduced DateFrom & DateTo epoc filtering criteria | 07/05/2024\r\n  0.2.1 | ExtendedPaymentNotification | Introduced Extended Payment Notification Webhook API reference | 08/04/2024\r\n  0.2.0 | Informational | Re-Structured API Documentation Informational Sections | 08/04/2024\r\n  "
+  license:
+    name: Apcopay License 1.0
+    url: 'https://www.apcopay.com/disclaimer'
+  summary: This is the Apcopay Integration Documentation targeting Developers/ Software Engineers that need to process Payments through Synthesis
+externalDocs:
+  description: |
+    More information around how to best utlise the API can be found by following this link
+  url: 'https://docs.apcopay.com/'
+jsonSchemaDialect: 'https://json-schema.org/draft/2020-12/schema'
+servers:
+  - url: 'https://payments.apcopay.tech/merchanttools'
+    description: Production
+paths:
+  /api/hpptoken/create:
+    post:
+      tags:
+        - Hosted Payment Page
+      summary: Create a Hosted Payment Page Token
+      description: Create a Hosted Payment Page Token
+      operationId: CreateaHostedPaymentPageToken
+      parameters:
+        - name: Signature
+          in: header
+          description: 'An HMAC SHA256 signature calculated over a range of request attributes which is included in the request headers.  One MUST verify this Signature in the received responses, to validate the integrity and authenticity of the data exchanged between the parties involved in the payment process. https://docs.apcopay.com/docs/basic-auth-signature-calculation'
+          required: true
+          schema:
+            type: string
+            examples:
+              - YrriOVSf3x7Tm4FZd4JcGqCeJcIQ494YIcxv/43XuqA=
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateaHostedPaymentPageTokenRequestBody'
+            examples:
+              Reference Payload:
+                value:
+                  TransactionType: PURC
+                  Amount: 150
+                  Currency: TRY
+                  OrderReference: MPAY BANKPM TEST
+                  RedirectionURL: 'https://yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://yourURLhere.com/FailRedirect/'
+                  IsTest: false
+                  UniqueReference: 4b8da4f0-d3b4-44ae-8019-8c66905ffad7
+                  Routing:
+                    ForceBank: MPAY
+                  Client:
+                    FirstName: Apco
+                    LastName: Test
+                    ClientAccount: APCOPAY TEST
+                    Email: johndoe@mail.com
+                    City: Valletta
+                    IPAddress: 214.21.134.79
+                    DateOfBirth: '2001-08-28'
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '25490183248'
+              MPay Cards:
+                value:
+                  TransactionType: PURC
+                  Amount: 150
+                  Currency: TRY
+                  OrderReference: MPAY BANKPM TEST
+                  RedirectionURL: 'https://yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://yourURLhere.com/FailRedirect/'
+                  IsTest: false
+                  UniqueReference: 4b8da4f0-d3b4-44ae-8019-8c66905ffad7
+                  Routing:
+                    ForceBank: MPAY
+                  Client:
+                    FirstName: Apco
+                    LastName: Test
+                    ClientAccount: APCOPAY TEST
+                    Email: johndoe@mail.com
+                    City: Valletta
+                    IPAddress: 214.21.134.79
+                    DateOfBirth: '2001-08-28'
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '25490183248'
+              Pay Primo Cards:
+                value:
+                  TransactionType: PURC
+                  Amount: 1
+                  Currency: TRY
+                  OrderReference: '1264454'
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Routing:
+                    ForceBank: PAYPRIMOCARDS
+                  IsTest: true
+                  Client:
+                    FirstName: Fyorin
+                    LastName: Card
+                    ClientAccount: APCOPAY TEST
+                    IPAddress: 212.152.12.12
+                    Email: apcotest@test.com
+                    MobileNo: '003577824322'
+                    DateOfBirth: '1900-12-12'
+                    City: cityTest
+                    Street: Valletta Road
+                    Country: MT
+              Mpay - EFT:
+                value:
+                  TransactionType: PURC
+                  Amount: 150
+                  Currency: TRY
+                  OrderReference: MPAYPM TEST
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Language: en
+                  Routing:
+                    ForcePayment: MPAYPM
+                  Client:
+                    FirstName: Mestan
+                    LastName: Gökhan Güven
+                    ClientAccount: APCOPAY TEST
+                    IPAddress: 20.101.159.120
+                    Email: johndoe@mail.com
+                    City: Valletta
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '20036565816'
+                    PaymentMethod: EFT
+                  IsTest: true
+              Mpay - Papara:
+                value:
+                  TransactionType: PURC
+                  Amount: 150
+                  Currency: TRY
+                  OrderReference: MPAYPM TEST
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  Language: en
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Routing:
+                    ForcePayment: MPAYPM
+                  Client:
+                    FirstName: Mestan
+                    LastName: GÃ¶khan GÃ¼ven
+                    ClientAccount: APCOPAY TEST
+                    IPAddress: 20.101.159.120
+                    Email: johndoe@mail.com
+                    City: Valletta
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '20036565816'
+                    PaymentMethod: PAPARA
+                  IsTest: true
+                  Configuration:
+                    Profile: showandedit
+              Mpay - Payco:
+                value:
+                  TransactionType: PURC
+                  Currency: TRY
+                  Amount: 100
+                  OrderReference: MPAYTEST
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  Language: en
+                  IsTest: true
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Routing:
+                    ForcePayment: MPAYPM
+                  Client:
+                    Email: apcopay@test.com
+                    ClientAccount: ggMestan
+                    FirstName: Mestan
+                    LastName: Gökhan Güven
+                    City: Valletta
+                    IPAddress: 20.101.159.120
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '20036565816'
+                    PaymentMethod: POPY
+                  Configuration:
+                    Profile: showandedit
+              Mpay - Parazula:
+                value:
+                  TransactionType: PURC
+                  Currency: TRY
+                  Amount: 100
+                  OrderReference: MPAYTEST
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  Language: en
+                  IsTest: true
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Routing:
+                    ForcePayment: MPAYPM
+                  Client:
+                    Email: apcopay@test.com
+                    ClientAccount: ggMestan
+                    FirstName: Mestan
+                    LastName: Gökhan Güven
+                    City: Valletta
+                    IPAddress: 20.101.159.120
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '20036565816'
+                    PaymentMethod: PARAZULA
+                  Configuration:
+                    Profile: showandedit
+              Mpay - Mefete:
+                value:
+                  TransactionType: PURC
+                  Currency: TRY
+                  Amount: 100
+                  OrderReference: MPAYTEST
+                  RedirectionURL: 'https://yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://yourURLhere.com/FailRedirect/'
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Language: en
+                  IsTest: true
+                  Routing:
+                    ForcePayment: MPAYPM
+                  Client:
+                    Email: apcopay@test.com
+                    ClientAccount: ggMestan
+                    FirstName: Mestan
+                    LastName: Gökhan Güven
+                    City: Valletta
+                    IPAddress: 20.101.159.120
+                  PaymentMethodData:
+                    ClientIdentificationNumber: '20036565816'
+                    PaymentMethod: MEFETE
+                  Configuration:
+                    Profile: showandedit
+              Mpay - Popy:
+                value:
+                  TransactionType: AUTH
+                  Currency: EUR
+                  Amount: 12.8
+                  OrderReference: INV00122025
+                  UniqueReference: 4b8da4f0-d3b4-44ae-8019-8c66905ffad7
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  Language: en
+                  IsTest: true
+                  Routing:
+                    ForceBank: PTEST
+                    ForcePayment: CARDS
+                    MainAcquirer: TRUEVO
+                    ForceMID: MID92483
+                  AntiFraud:
+                    FraudProfile: DarkHPPProfile
+                    CardRestrict: false
+                  Client:
+                    Email: joe.bloggs@testjb.com
+                    ClientAccount: CliAcc01002
+                    FirstName: Joe
+                    LastName: Bloggs
+                    Country: MLT
+                    MobileNo: '00441234567'
+                    Street: High Street
+                    City: MagicCity
+                    ZIPCode: BGGC1234
+                    State: UK
+                    DateOfBirth: '2924-12-31'
+                    IPAddress: 214.21.134.79
+                  UDF:
+                    DefinedField1: ValueToDefinedField1
+                    ...: string
+                    DefinedFieldN: ValueToDefinedFieldN
+                  Configuration:
+                    Profile: DarkHPPProfile
+                    AllowRetryonFail: false
+                    ShowSavedCards: 2
+                    CardHolderNameEdit: false
+                    HidePayment: 'Skrill, Neteller, Cards'
+                    AllowAddNewCard: true
+                    ShowWallets:
+                      ApplePay: true
+                      GooglePay: true
+                  PaymentMethodData:
+                    AdditionalProviderParmeter1: 'IBAN:IT60X0542811101000000123456'
+                    AdditionalProviderParamterN: 'CISNumber:9232233'
+              CPAPM:
+                value:
+                  TransactionType: PURC
+                  Amount: 10
+                  Currency: EUR
+                  Country: MLT
+                  OrderReference: MerchantOrder1
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https://www.yourURLhere.com/Listener'
+                  FailRedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  UniqueReference: e516b8f4-8b5c-4290-a2b0-b74b55239315
+                  Routing:
+                    ForcePayment: CPAPM
+                  IsTest: false
+                  Configuration:
+                    Profile: showandedit
+                  Client:
+                    Email: apcotest@mail.com
+                    ClientAccount: testing
+                    FirstName: John
+                    LastName: Doe
+                    Country: EN
+                    MobileNo: '3567789963'
+                    Street: High Street
+                    City: MagicCity
+                    ZIPCode: BGGC1234
+                    State: UK
+                    DateOfBirth: '1977-12-31'
+                    IPAddress: 127.0.0.1
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateaHostedPaymentPageTokenResponse200'
+              example:
+                PspID: 739005
+                Token: f86dff7b36aa4401bbb92c88280d6db4
+                RedirectUrl: 'https://payments.dev.apspglobal.com/merchanttools/api/Redirect/Loader?token=f86dff7b36aa4401bbb92c88280d6db4'
+                Status: PENDING
+                IsSuccess: true
+                ErrorMessage: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedPaymentPageResponse'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedPaymentPageUnauthorizedException'
+        default:
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedPaymentPageResponse'
+      deprecated: false
+      x-stoplight:
+        id: khvfkz4qqal19
+      security:
+        - ClientCredentials: []
+    parameters: []
+  /api/directconnect/execute:
+    post:
+      description: The methods under the POST Operation are operations that create a transaction from scratch and do not depend on a previous operation
+      tags:
+        - Payment Operations
+      summary: Request Payment or Payout
+      operationId: PaymentOperationAUTHPURC
+      parameters:
+        - name: Signature
+          in: header
+          description: 'An HMAC SHA256 signature calculated over a range of request attributes which is included in the request headers.  One MUST verify this Signature in the received responses, to validate the integrity and authenticity of the data exchanged between the parties involved in the payment process. https://docs.apcopay.com/docs/basic-auth-signature-calculation'
+          required: true
+          schema:
+            type: string
+            examples:
+              - YrriOVSf3x7Tm4FZd4JcGqCeJcIQ494YIcxv/43XuqA=
+      requestBody:
+        description: A DirectConnectRequest Object consisting of all the attributes required to fulfil a Direct Connect integration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentOperationAUTHPURCRequestBody'
+            examples:
+              Pay Primo Cards:
+                value:
+                  TransactionType: PURC
+                  Amount: '100'
+                  Currency: TRY
+                  OrderReference: '123456'
+                  PaymentCredentials:
+                    PaymentSource: Card
+                    CardNumber: '5351772561457936'
+                    CvV2: '483'
+                    ExpMonth: '05'
+                    ExpYear: '2029'
+                    CardHolderName: "FIRAT DAÃ\x84"
+                  Client:
+                    ClientAccount: APCOPAY TEST
+                    FirstName: John
+                    LastName: Doe
+                    Email: apcopayintegrations@apcopay.com
+                    City: Fakecity
+                    IPAddress: 127.0.0.1
+                  Routing:
+                    ForceBank: PAYPRIMOCARDS
+                  BrowserDetails:
+                    UserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    JavaEnabled: true
+                    ScreenColorDepth: '1'
+                    ScreenWidth: '1080'
+                    ScreenHeight: '840'
+                    TimeZone: '2'
+                    AcceptHeader: application/json
+                    BrowserLanguage: en
+                  RedirectionURL: 'https://www.yourURLhere.com/Redirect/'
+                  CallBackURL: 'https:/https://www.yourURLhere.com/Listener'
+                  IsTest: 'True'
+              Mpay Cards:
+                value:
+                  TransactionType: PURC
+                  Amount: '100'
+                  Currency: TRY
+                  OrderReference: '123456'
+                  PaymentCredentials:
+                    PaymentSource: Card
+                    CardNumber: '5351772561457936'
+                    CvV2: '483'
+                    ExpMonth: '05'
+                    ExpYear: '2029'
+                    CardHolderName: "FIRAT DAÃ\x84"
+                  Client:
+                    ClientAccount: APCOPAY TEST
+                    FirstName: John
+                    LastName: Doe
+                    Email: apcopayintegrations@apcopay.com
+                    City: Fakecity
+                    IPAddress: 127.0.0.1
+                  Routing:
+                    ForceBank: PAYPRIMOCARDS
+                  BrowserDetails:
+                    UserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                    JavaEnabled: true
+                    ScreenColorDepth: '1'
+                    ScreenWidth: '1080'
+                    ScreenHeight: '840'
+                    TimeZone: '2'
+                    AcceptHeader: application/json
+                    BrowserLanguage: en
+                  RedirectionURL: 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Redirect/'
+                  CallBackURL: 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+                  IsTest: 'True'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectResponse'
+      deprecated: false
+      x-stoplight:
+        id: h81n6bo5qbu1q
+      security:
+        - ClientCredentials: []
+    put:
+      description: The methods under the PUT Operation are operations that depend on previous operations and hence
+      tags:
+        - Payment Operations
+      summary: Update Previous Payment Operation
+      operationId: UpdateorActOnExistingPayment
+      parameters:
+        - name: Signature
+          in: header
+          description: 'An HMAC SHA256 signature calculated over a range of request attributes which is included in the request headers.  One MUST verify this Signature in the received responses, to validate the integrity and authenticity of the data exchanged between the parties involved in the payment process. https://docs.apcopay.com/docs/basic-auth-signature-calculation'
+          required: true
+          schema:
+            type: string
+            examples:
+              - YrriOVSf3x7Tm4FZd4JcGqCeJcIQ494YIcxv/43XuqA=
+      requestBody:
+        description: A DirectConnectRequest Object consisting of all the attributes required to fulfil a Direct Connect integration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureOrRefundPaymentRequestBody'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectConnectResponse'
+      deprecated: false
+      x-stoplight:
+        id: gjtta1d1foths
+      security:
+        - ClientCredentials: []
+    parameters: []
+  /api/cards/tokenise:
+    post:
+      description: The Tokenise Card operation is used to tokenise a new credit card
+      tags:
+        - Tokenisation
+      summary: Tokenise a Card
+      operationId: SetTokeniseCard
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokeniseCardRequestBody'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenisedCardsResponse200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+      deprecated: false
+      x-stoplight:
+        id: ggseuwf4y9wmj
+      security:
+        - ClientCredentials: []
+    delete:
+      description: The Delete Tokenised Card operation is used to delete a Card Token.
+      tags:
+        - Tokenisation
+      summary: Delete a Tokenised Card
+      operationId: DeleteTokenisedCards
+      parameters:
+        - name: cardToken
+          in: path
+          description: A GUID Based token representing a tokenized card
+          required: true
+          schema:
+            type: string
+            contentEncoding: uuid
+            examples:
+              - 181767b2-bcfe-40bd-959f-cf78072c2bf8
+        - name: clientAccount
+          in: query
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          style: form
+          explode: true
+          schema:
+            type: string
+            examples:
+              - jbloggsAcc0001
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteTokenisedCardsResponse200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+      deprecated: false
+      x-stoplight:
+        id: ijqbncp9nvpvm
+      security:
+        - ClientCredentials: []
+    parameters:
+      - schema:
+          type: string
+        name: cardToken
+        in: path
+        description: A GUID Based token representing a tokenized card
+  '/api/cards/tokens/{cardToken}':
+    get:
+      description: The Get Tokenised Cards operation is used to retrieve all the Tokenised Cards linked with a Client Account
+      tags:
+        - Tokenisation
+      summary: Get Tokenised Cards Information
+      operationId: GetTokenisedCards
+      parameters:
+        - name: cardToken
+          in: path
+          description: A GUID Based token representing a tokenized card
+          schema:
+            type: string
+            contentEncoding: uuid
+            examples:
+              - 181767b2-bcfe-40bd-959f-cf78072c2bf8
+        - name: clientAccount
+          in: query
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          style: form
+          explode: true
+          schema:
+            type: string
+            examples:
+              - jbloggsAcc0001
+        - name: dateRegisteredAfter
+          in: query
+          description: This field represents the Epoch Timestamp to filter Cards that have been registered from the specified date
+          style: form
+          explode: true
+          schema:
+            type: integer
+            contentEncoding: int64
+            examples:
+              - 1674134016
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenisedCardsResponse200'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+      deprecated: false
+      x-stoplight:
+        id: p7fpchs4gp43k
+      security:
+        - ClientCredentials: []
+    parameters: []
+  /api/transactions/retrieve:
+    get:
+      tags:
+        - Transaction Data
+      summary: Get Payment Response
+      description: This endpoint is used to retrieve the transaction information
+      operationId: GetPaymentResponse
+      parameters:
+        - name: OrderReference
+          in: query
+          description: Merchant Unique Transaction Reference.This may be used for reconcilliation. It is recommended that the identifier is unique to the transaction.
+          style: form
+          explode: true
+          schema:
+            type: string
+            examples:
+              - ord001-56472
+        - name: PspId
+          in: query
+          description: This field should contain the Gateway Unique Transaction ID
+          style: form
+          explode: true
+          schema:
+            type: integer
+            contentEncoding: int32
+            examples:
+              - 4
+            example: 935454
+          required: true
+        - schema:
+            type: integer
+          in: query
+          name: DateFrom
+          description: 'This field should contain the DateFrom epoc value to be used to filter transactions '
+        - schema:
+            type: integer
+          in: query
+          name: DateTo
+          description: This field should contain the DateTo epoc value to be used to filter transactions
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionStatusObject'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericUnauthorizedException'
+        default:
+          description: Business Validation Exception
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericBadRequestException'
+      deprecated: false
+      x-stoplight:
+        id: 1ky8dljbyhbq2
+      security:
+        - ClientCredentials: []
+    parameters: []
+  /api/banktransfers/getaccountpayoutbalance:
+    get:
+      summary: Get Account Payout Balance
+      tags:
+        - Balances
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPayoutBalanceResponse'
+              examples:
+                Example:
+                  value:
+                    Balances:
+                      Amount: 100
+                      Currency: EUR
+                    AccountSpecificData:
+                      IBAN: IT60X0542811101000000123456
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicResponseObject'
+        '401':
+          description: Unauthorized
+      operationId: GetAccountPayoutBalance
+      x-stoplight:
+        id: 77xptai1anewq
+      security:
+        - ClientCredentials: []
+      description: This endpoint is used to retrieve the Payout Balance information.
+      parameters:
+        - schema:
+            type: string
+            example: EUR
+          in: query
+          name: Currency
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          required: true
+        - schema:
+            type: string
+            example: Truepay
+          in: query
+          name: PaymentMethodProvider
+          description: Specifies the specific Bank and/or Alternate Payment Method APM provider
+          required: true
+        - schema:
+            type: boolean
+            default: false
+            example: true
+          in: query
+          name: IsTest
+          description: Specifies if the request will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+        - schema:
+            type: string
+            example: LU120010001234567891
+          in: query
+          name: AccountIdentifier
+          description: 'Specifies the SWIFT, BIC, IBAN or Account Number supplied by the Provider. This is typically required where there is more then one account configured (e.g. due to different currencies)'
+webhooks:
+  callback:
+    post:
+      tags:
+        - WebHooks
+      summary: Payment Notification
+      description: This is the webhook call sent to notify the merchant the outcome of the payment attempt
+      operationId: PaymentNotification
+      parameters:
+        - name: signature
+          in: header
+          description: This value  is intended to be used by the receiving logic to confirm that the payload has not been tempered with in transit. The following link explains the signature calculation process which needs to be implemented by the receiving logic and matched with the specific signature contained in the header Signature Calculation and Verification
+          required: true
+          schema:
+            type: string
+            examples:
+              - qmoyFWyH30epwaNWaI4hzB5t9s24JrV2699EUhK/fEI=
+      requestBody:
+        description: This is the transaction status JSON payload which provides details around the transaction
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TransactionStatusObject'
+                - description: This is the transaction status JSON payload which provides details around the transaction
+              contentMediaType: application/json
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+        - url: 'https://payments.dev.apspglobal.com/merchanttools'
+          variables: {}
+        - url: 'https://yourcallbackenvironment/path'
+          variables: {}
+    parameters: []
+  Extendedcallback:
+    post:
+      tags:
+        - WebHooks
+      summary: Extended Payment Notification
+      description: This is the webhook call sent to notify the merchant the outcome of the payment attempt containig the UserInputs Object as an extension to the default Payment Notification. UserInputs Object is a DYNAMIC structure which is populated based on additional data which is supplied by the user during the payment process during the Apcopay HPP flow. This Object is transmitted only if the ShowUI Feature Flag in the HPP request is set to TRUE.
+      operationId: ExtendePaymentNotification
+      parameters:
+        - name: signature
+          in: header
+          description: This value  is intended to be used by the receiving logic to confirm that the payload has not been tempered with in transit. The following link explains the signature calculation process which needs to be implemented by the receiving logic and matched with the specific signature contained in the header Signature Calculation and Verification
+          required: true
+          schema:
+            type: string
+            examples:
+              - qmoyFWyH30epwaNWaI4hzB5t9s24JrV2699EUhK/fEI=
+      requestBody:
+        description: This is the transaction status JSON payload which provides details around the transaction.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/ExtendedTransactionStatusObject'
+                - description: This is the Extended transaction status JSON payload which provides details around the transaction
+              contentMediaType: application/json
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+      servers:
+        - url: 'https://payments.dev.apspglobal.com/merchanttools'
+          variables: {}
+        - url: 'https://yourcallbackenvironment/path'
+          variables: {}
+    parameters: []
+components:
+  schemas:
+    ThreeDSecureAuthentication:
+      title: ThreeDSecureAuthentication
+      type: object
+      examples:
+        - eci: '07'
+          xid: aGVsbG8xMjM0NQ==
+          dsTransactionId: be395b1a6ab345cfb6688e6737413ba3
+          acsTransID: be395b1a6ab345cfb6688e6737413ba3
+          challengeIndicator: '01'
+          transStatus: 'Y'
+          threeDSecureFlow: CHALLENGE
+          cavv: d29ybGQ1NDMyMQ==
+          threeDVersion: 2.2.0
+      x-stoplight:
+        id: 2irxfd4i9zu0u
+      required:
+        - Eci
+        - Xid
+        - DsTransactionId
+        - AcsTransID
+        - ChallengeIndicator
+        - TransStatus
+        - ThreeDSecureFlow
+        - Cavv
+        - ThreeDVersion
+      properties:
+        Eci:
+          type: integer
+          description: 'Specifies thet Electronic Commerce Indicator (ECI) value returned by Directory Servers (namely Visa, MasterCard, JCB, and American Express) indicating the outcome of authentication attempted on transactions enforced by 3DS'
+          contentEncoding: int32
+          examples:
+            - 7
+          x-stoplight:
+            id: pcao0zuwh0dl7
+        Xid:
+          type: string
+          description: The XID is the transaction ID from the 3D Secure provider. This is Base64 encoded data.
+          examples:
+            - aGVsbG8xMjM0NQ==
+          x-stoplight:
+            id: mz6lorkq1g4t7
+        DsTransactionId:
+          type: string
+          description: Directory Server Transaction ID from the 3D Secure provider. This is commonly a string in UUID format.
+          contentEncoding: uuid
+          examples:
+            - be395b1a6ab345cfb6688e6737413ba3
+          x-stoplight:
+            id: wgg7mcuivn2sk
+        AcsTransID:
+          type: string
+          description: Universally unique transaction identifier assigned by the ACS to identify a single transaction.
+          contentEncoding: uuid
+          examples:
+            - be395b1a6ab345cfb6688e6737413ba3
+          x-stoplight:
+            id: w8cqkzywv79zz
+        ChallengeIndicator:
+          type: integer
+          description: 'Indicates whether a challenge is requested for this transaction. For example: 1) For 01-PA, a 3DS Requestor may have concerns about the transaction, and request a challenge. 2) For 02-NPA, a challenge may be necessary when adding a new card to a wallet. 3) For local/regional mandates or other variables, this includes sending ''04'', requiring challenge for PSD2 compliance.'
+          contentEncoding: int32
+          examples:
+            - 1
+          x-stoplight:
+            id: n6lynhahejmvg
+        TransStatus:
+          type: string
+          description: 'Indicates whether a transaction qualifies as an authenticated transaction or account verification. Meaning of values: Y - Authentication/ Account Verification Successful N - Not Authenticated /Account Not Verified; Transaction denied U - Authentication/ Account Verification Could Not Be Performed; Technical or other problem, as indicated in ARes or RReq A - Attempts Processing Performed; Not Authenticated/Verified , but a proof of attempted authentication/verification is provided C - Challenge Required; Additional authentication is required using the CReq/CRes R - Authentication/ Account Verification Rejected; Issuer is rejecting authentication/verification and request that authorisation not be attempted. Required if messageCategory is "01"'
+          examples:
+            - 'Y'
+          x-stoplight:
+            id: 6f3lkmeua7gq7
+        ThreeDSecureFlow:
+          $ref: '#/components/schemas/ThreeDSecureAuthenticationThreeDSecureFlow'
+          x-stoplight:
+            id: vxlqdvm91tqn9
+        Cavv:
+          type: string
+          description: A CAVV is generated by the issuer’s Access Control Server (ACS). The CAVV provides evidence that cardholder authentication occurred or that the merchant attempted authentication. A CAVV is unique for each authentication transaction. This is Base64 encoded data.
+          examples:
+            - d29ybGQ1NDMyMQ==
+          x-stoplight:
+            id: ny2qpuw49cqih
+        ThreeDVersion:
+          $ref: '#/components/schemas/ThreeDSecureAuthenticationThreeDVersion'
+          x-stoplight:
+            id: 7kporsm7rtmy7
+    TokeniseCardRequest:
+      title: TokeniseCardRequest
+      type: object
+      examples:
+        - clientAccount: CliACC0102
+          cardHolderName: Joe Bloggs
+          cardType: VISA
+          cardNumber: '4444444444444444'
+          expMonth: 11
+          expYear: 2023
+      x-stoplight:
+        id: re4ry2za42nn0
+      required:
+        - CardHolderName
+        - CardNumber
+        - ExpMonth
+        - ExpYear
+      properties:
+        ClientAccount:
+          type: string
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          examples:
+            - Account12345
+          example: CliAcc002001
+          x-stoplight:
+            id: 1tgpq3ukah10q
+        CardHolderName:
+          type: string
+          description: Indicates the Card Holder Name & Surname
+          examples:
+            - John Doe
+          example: Joe Bloggs
+          x-stoplight:
+            id: qa13epxq47l42
+        CardNumber:
+          type: integer
+          description: Specifies the Card Primary Account Number (Card Number) which typically is between 14 to 19 digit
+          contentEncoding: int64
+          examples:
+            - 4444444444440111
+          example: 4554123232144556
+          x-stoplight:
+            id: 2dyb4mzotksrn
+        ExpMonth:
+          type: integer
+          description: Specifies the Month part of the Card Expiry
+          contentEncoding: int32
+          examples:
+            - 12
+          example: 11
+        ExpYear:
+          type: integer
+          description: Specifies the Year part of the Card Expiry
+          examples:
+            - 2050
+          example: 2026
+    HostedPaymentPageRequest:
+      title: HostedPaymentPageRequest
+      type: object
+      description: This is the full Payload supported by the Hosted Payment Page method
+      x-stoplight:
+        id: u9f3j212lcdry
+      required:
+        - TransactionType
+        - Currency
+        - Amount
+        - OrderReference
+        - UniqueReference
+        - RedirectionURL
+        - CallBackURL
+        - FailRedirectionURL
+        - Client
+      properties:
+        TransactionType:
+          $ref: '#/components/schemas/HostedPaymentPageRequestTransactionType'
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+          example: EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+          example: 12.8
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.This may be used for reconcilliation. It is recommended that the identifier is unique to the transaction.
+          examples:
+            - MerchantOrder1
+          example: INV00122025
+        UniqueReference:
+          type: string
+          description: Unique identifier generated for each and every attempt when performing a transaction
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+          example: 4b8da4f0-d3b4-44ae-8019-8c66905ffad7
+          x-stoplight:
+            id: 4z6naq60sirus
+        RedirectionURL:
+          type: string
+          description: Specifies the URL where the user should be redirected after the transaction.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Redirect/'
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        FailRedirectionURL:
+          type: string
+          description: Indicates the URL where the user should be redirected in case the transaction fails.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/FailedRedirect/'
+        Language:
+          type: string
+          description: Sets the ISO 639-1 language code for the Hosted Payment Page
+          default: en
+          examples:
+            - it
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        Routing:
+          $ref: '#/components/schemas/HostedPaymentPageRequestRouting'
+        AntiFraud:
+          $ref: '#/components/schemas/AntifraudObject'
+          x-stoplight:
+            id: ga362vvf6c57s
+        Client:
+          $ref: '#/components/schemas/ClientObject'
+          x-stoplight:
+            id: vul58cop1vhwj
+        UDF:
+          $ref: '#/components/schemas/HostedPaymentPageRequestUDF'
+        Configuration:
+          $ref: '#/components/schemas/ConfigurationObject'
+          x-stoplight:
+            id: khvqb9gfx40vc
+        PaymentMethodData:
+          $ref: '#/components/schemas/HPPPaymentMethodDataObject'
+          x-stoplight:
+            id: 6f7qaxr9na4c0
+    DirectConnectRequestPurc:
+      title: Purchase Transaction
+      type: object
+      description: 'A'' purchase'' merges both the authorisation and capture processes, validating the card''s status, checking for sufficient funds, and finalizing the transaction by transferring the funds from the customer''s card to the merchant''s account'
+      x-stoplight:
+        id: ah25vbxeqxb98
+      required:
+        - TransactionType
+        - Currency
+        - Amount
+        - OrderReference
+        - UniqueReference
+        - RedirectionURL
+        - CallBackURL
+        - IsTest
+        - Client
+        - BrowserDetails
+        - PaymentCredentials
+      properties:
+        TransactionType:
+          description: Specifies the Transaction Type for this operation. In the contect of a Payment Purchase it is a "PURC"
+          examples:
+            - PURC
+          example: PURC
+          enum:
+            - AUTH
+            - PURC
+            - ORIGINALCREDIT
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+          example: EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+          example: 12.5
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.This may be used for reconcilliation. It is recommended that the identifier is unique to the transaction.
+          examples:
+            - MerchantOrder1
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+          x-stoplight:
+            id: z2xt5jhiyx69c
+        Language:
+          type: string
+          description: Sets the ISO 639-1 language code for the Hosted Payment Page
+          default: en
+          examples:
+            - it
+        RedirectionURL:
+          type: string
+          description: Specifies the URL where the user should be redirected after the transaction.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Redirect/'
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        FailRedirectionURL:
+          type: string
+          description: Indicates the URL where the user should be redirected in case the transaction fails. If not set the redirectionUrl is used instead.
+          examples:
+            - 'https://my.site/failedurl/e93e590b-8cfa-4c70-88ab-379f0dbbbd30'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        Routing:
+          $ref: '#/components/schemas/DirectConnectRouting'
+        AntiFraud:
+          $ref: '#/components/schemas/AntifraudObject'
+          x-stoplight:
+            id: 7s4pfp5mkmget
+        Client:
+          $ref: '#/components/schemas/ClientObject'
+          x-stoplight:
+            id: 87s1gs92dd0pd
+        UDF:
+          $ref: '#/components/schemas/HostedPaymentPageRequestUDF'
+        PaymentMethodData:
+          $ref: '#/components/schemas/HPPPaymentMethodDataObject'
+          x-stoplight:
+            id: siqfun22metoq
+        BrowserDetails:
+          $ref: '#/components/schemas/DirectConnectRequestBrowserDetails'
+        ThreeDSecureAuthentication:
+          $ref: '#/components/schemas/DirectConnectRequestThreeDSecureAuthentication'
+        PaymentCredentials:
+          x-stoplight:
+            id: hzwym4ive9hgg
+          discriminator:
+            propertyName: PaymentSource
+            mapping:
+              Card: '#/components/schemas/CardObject'
+              CardToken: '#/components/schemas/CardTokenObject'
+              ApplePayToken: '#/components/schemas/ApplePayTokenObject'
+              GooglePayToken: '#/components/schemas/GooglePayTokenObject'
+              TransactionReference: '#/components/schemas/TransactionReferenceObject'
+          oneOf:
+            - $ref: '#/components/schemas/CardObject'
+              x-stoplight:
+                id: 5rj03fc8qi4s2
+            - $ref: '#/components/schemas/CardTokenObject'
+              x-stoplight:
+                id: nudquk0qi6ove
+            - $ref: '#/components/schemas/ApplePayTokenObject'
+            - $ref: '#/components/schemas/GooglePayTokenObject'
+            - $ref: '#/components/schemas/TransactionReferenceObject'
+              x-stoplight:
+                id: c5lbv7pq57iqy
+          description: 'This refers to any form of information or token used to authorize and process payments, whether it''s a physical credit card, a virtual token representing a credit card, or a digital payment method stored on a mobile device'
+        PspId:
+          type: integer
+          x-stoplight:
+            id: pol60s01sroi4
+          description: The previously processed transaction reference (PspID) to be used as reference for Repeat Purchase or Repeat Authorization Transactions on MIT Scenarios
+    DirectConnectRequestAuth:
+      title: Authorise Transaction
+      type: object
+      description: An 'authorisation' creates a validation on a card to verify its active status and ensure that there is a sufficient balance available to cover the requested amount. Proceed to process a capture ('CAPT') to capturing the funds.
+      x-stoplight:
+        id: df25q08lo8keg
+      required:
+        - TransactionType
+        - Currency
+        - Amount
+        - OrderReference
+        - UniqueReference
+        - RedirectionURL
+        - CallBackURL
+        - Client
+        - BrowserDetails
+        - PaymentCredentials
+      properties:
+        TransactionType:
+          description: pecifies the Transaction Type for this operation. In the contect of a Payment Authorisation it is an "AUTH"
+          examples:
+            - AUTH
+          example: AUTH
+          enum:
+            - AUTH
+            - PURC
+            - ORIGINALCREDIT
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+          example: EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+          example: 12.23
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.This may be used for reconcilliation. It is recommended that the identifier is unique to the transaction.
+          examples:
+            - MerchantOrder1
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+          x-stoplight:
+            id: lns18vm30j8dd
+        Language:
+          type: string
+          description: Sets the ISO 639-1 language code for the Hosted Payment Page
+          default: en
+          examples:
+            - it
+        RedirectionURL:
+          type: string
+          description: Specifies the URL where the user should be redirected after the transaction.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Redirect/'
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        FailRedirectionURL:
+          type: string
+          description: Indicates the URL where the user should be redirected in case the transaction fails. If not set the redirectionUrl is used instead.
+          examples:
+            - 'https://my.site/failedurl/e93e590b-8cfa-4c70-88ab-379f0dbbbd30'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        Routing:
+          $ref: '#/components/schemas/DirectConnectRequestRouting'
+        AntiFraud:
+          $ref: '#/components/schemas/AntifraudObject'
+          x-stoplight:
+            id: lrzoumzkff8gx
+        Client:
+          $ref: '#/components/schemas/ClientObject'
+          x-stoplight:
+            id: hooc2bljvi1eu
+        UDF:
+          $ref: '#/components/schemas/HostedPaymentPageRequestUDF'
+        PaymentMethodData:
+          $ref: '#/components/schemas/HPPPaymentMethodDataObject'
+          x-stoplight:
+            id: uovm02b7aco1t
+        BrowserDetails:
+          $ref: '#/components/schemas/DirectConnectRequestBrowserDetails'
+        ThreeDSecureAuthentication:
+          $ref: '#/components/schemas/DirectConnectRequestThreeDSecureAuthentication'
+        PaymentCredentials:
+          x-stoplight:
+            id: rb9frjss400hs
+          discriminator:
+            propertyName: PaymentSource
+            mapping:
+              Card: '#/components/schemas/CardObject'
+              CardToken: '#/components/schemas/CardTokenObject'
+              ApplePayToken: '#/components/schemas/ApplePayTokenObject'
+              GooglePayToken: '#/components/schemas/GooglePayTokenObject'
+              TransactionReference: '#/components/schemas/TransactionReferenceObject'
+          oneOf:
+            - $ref: '#/components/schemas/CardObject'
+              x-stoplight:
+                id: 7wkccg6fm1pek
+            - $ref: '#/components/schemas/CardTokenObject'
+              x-stoplight:
+                id: e0qfb7ceb9gun
+            - $ref: '#/components/schemas/ApplePayTokenObject'
+            - $ref: '#/components/schemas/GooglePayTokenObject'
+            - $ref: '#/components/schemas/TransactionReferenceObject'
+              x-stoplight:
+                id: qbf175ohc8qsz
+          description: 'This refers to any form of information or token used to authorize and process payments, whether it''s a physical credit card, a virtual token representing a credit card, or a digital payment method stored on a mobile device'
+        PspId:
+          type: integer
+          x-stoplight:
+            id: x9i1dvc7yq8nd
+          description: The previously processed transaction reference (PspID) to be used as reference for Repeat Purchase or Repeat Authorization Transactions on MIT Scenarios
+    DirectConnectRequestPayout:
+      title: Original Credit or Payout Transaction
+      x-stoplight:
+        id: rlm2c321pmkpc
+      type: object
+      description: 'An ''OCT'' or Payout operation is used to Credit the customer. Mainly one can utilize these transaction types by referencing the PSP ID in the request, which should originate from the original authorization or purchase made by the customer.'
+      required:
+        - TransactionType
+        - Currency
+        - Amount
+        - OrderReference
+        - Client
+        - UniqueReference
+        - CallBackURL
+        - IsTest
+      properties:
+        TransactionType:
+          description: Specifies the Transaction Type for this operation. In the contect of an OCT or Payout it is an "ORIGINALCREDIT"
+          examples:
+            - AUTH
+          example: ORIGINALCREDIT
+          enum:
+            - AUTH
+            - PURC
+            - ORIGINALCREDIT
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+          example: EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+          example: 12.09
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.This may be used for reconcilliation. It is recommended that the identifier is unique to the transaction.
+          examples:
+            - MerchantOrder1
+        PspId:
+          type: integer
+          x-stoplight:
+            id: fbabes195prkr
+          description: The previously processed transaction reference (PspID) to be used as reference for the Original Credit / Payout Scenarios
+        PaymentDestination:
+          x-stoplight:
+            id: 9r4xhz1colc2i
+          discriminator:
+            propertyName: PaymentMethod
+            mapping:
+              Card: '#/components/schemas/CardsPayObject'
+              CardToken: '#/components/schemas/CardTokenPayObject'
+              AlternativePaymentMethods: '#/components/schemas/AlternativePaymentMethodsPayObject'
+          oneOf:
+            - $ref: '#/components/schemas/CardsPayObject'
+            - $ref: '#/components/schemas/CardTokenPayObject'
+            - $ref: '#/components/schemas/AlternativePaymentMethodsPayObject'
+          description: 'This refers to any PaymentMethod used for Payout or Original Credit Scenario. This could be a wallet, bank account etc. '
+        Client:
+          $ref: '#/components/schemas/ClientObject'
+          x-stoplight:
+            id: sl9e0wlfeppzs
+          description: A model capturing the client information
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+          x-stoplight:
+            id: e21nghvuk7j1z
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+    DirectConnectRequestCapt:
+      title: Capture Transaction
+      type: object
+      description: 'A ''capture'' refers to the action of recording and finalizing a previously authorized transaction, and initiating the transferring of funds from the customer''s account to the merchant''s account.Can only be used on an active authorisation transaction.'
+      x-stoplight:
+        id: re80b25uvpl23
+      required:
+        - TransactionType
+        - Amount
+        - CallBackURL
+        - IsTest
+        - UniqueReference
+        - PspID
+      properties:
+        TransactionType:
+          description: Specifies the Transaction Type for this operation. In the contect of a Payment Capture it is a "CAPT"
+          examples:
+            - CAPT
+          example: CAPT
+          enum:
+            - AUTH
+            - PURC
+            - CAPT
+            - GENERALVOID
+            - PARTIALREFUND
+            - ORIGINALCREDIT
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+        PspID:
+          type: integer
+          x-stoplight:
+            id: 8zih7hx2lwmkt
+          description: This field should contains the Gateway Unique Transaction ID
+    DirectConnectRequestRefund:
+      title: Refund Transaction
+      type: object
+      description: The Direct Connect Request consists of a main DirectConnectRequest Object and the ThreeDSecureAuthentication and BrowserDetails child objects required to fulfil the Direct Connection operation
+      x-stoplight:
+        id: k437hf6bxmpaa
+      required:
+        - TransactionType
+        - Amount
+        - CallBackURL
+        - IsTest
+        - UniqueReference
+        - PspId
+      properties:
+        TransactionType:
+          description: Specifies the Transaction Type for this operation. In the contect of a Payment Refund it is a "PARTIALREFUND"
+          examples:
+            - REFUND
+          example: PARTIALREFUND
+          enum:
+            - AUTH
+            - PURC
+            - CAPT
+            - GENERALVOID
+            - PARTIALREFUND
+            - ORIGINALCREDIT
+        Amount:
+          type: number
+          description: Indicates the transaction amount to be processed.
+          examples:
+            - 13
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+        PspId:
+          type: integer
+          x-stoplight:
+            id: ctubumy2tfzn7
+          description: This field should contain the Gateway Unique Transaction ID
+    DirectConnectRequestVoid:
+      title: Void Transaction
+      type: object
+      description: 'After a card payment has been authorised, the transaction remains incomplete until it undergoes the capture process. If you decide not to proceed with capturing the payment, you have the option to void it via our card payments API. Voids are only possible for card payments.'
+      x-stoplight:
+        id: rif22k8mtpnnn
+      required:
+        - TransactionType
+        - CallBackURL
+        - IsTest
+        - UniqueReference
+        - PspId
+      properties:
+        TransactionType:
+          description: Specifies the Transaction Type for this operation. In the contect of a Void Payment Capture it is a "VOID"
+          examples:
+            - VOID
+          example: GENERALVOID
+          enum:
+            - AUTH
+            - PURC
+            - CAPT
+            - GENERALVOID
+            - PARTIALREFUND
+            - ORIGINALCREDIT
+        CallBackURL:
+          type: string
+          description: Specifies the URL where callback notifications or responses should be sent.
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Listener'
+        IsTest:
+          type: boolean
+          description: Specifies if the transaction will be routed to the sandbox environment. Not passing this parameter will default to the live environment
+          examples:
+            - true
+        UniqueReference:
+          type: string
+          description: A unique identifier must be provided in this parameter to identify the request and prevent duplicate processing. It is recommended that you utilize a GUID or similar mechanism.
+          contentEncoding: uuid
+          examples:
+            - 6514441d-8abe-4d7b-9e0c-3aa386333b34
+        PspId:
+          type: integer
+          x-stoplight:
+            id: 1dco3xpsdef5q
+          description: This field should contain the Gateway Unique Transaction ID
+    BrowserDetails:
+      title: BrowserDetails
+      required:
+        - UserAgent
+        - JavaEnabled
+        - ScreenColorDepth
+        - ScreenWidth
+        - ScreenHeight
+        - TimeZone
+        - AcceptHeader
+        - BrowserLanguage
+      type: object
+      properties:
+        UserAgent:
+          type: string
+          description: This field contains the exact content of the HTTP User-Agent header.
+          examples:
+            - '"UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"'
+        JavaEnabled:
+          type: boolean
+          description: This field contains a value representing the ability of the cardholder's browser to execute Java.
+          examples:
+            - true
+        ScreenColorDepth:
+          type: integer
+          description: 'The value as per EMVCo specs can be one of 1, 4, 8, 15, 16, 24, 32, 48. In case, an unsupported ScreenColorDepth is determined, the nearest supported value that is less than the actual one needs to be submitted.'
+          contentEncoding: int32
+          examples:
+            - 1
+        ScreenWidth:
+          type: integer
+          description: This field contains the total width of the cardholder's screen in pixels.
+          contentEncoding: int32
+          examples:
+            - 1080
+        ScreenHeight:
+          type: integer
+          description: This field contains the total height of the cardholder's screen in pixels.
+          contentEncoding: int32
+          examples:
+            - 840
+        TimeZone:
+          type: integer
+          description: This field contains the difference between UTC time and the cardholder's browser local time in minutes.
+          contentEncoding: int32
+          examples:
+            - 2
+        AcceptHeader:
+          type: string
+          description: This field contains the exact content of the HTTP accept header.
+          examples:
+            - application/json
+        BrowserLanguage:
+          type: string
+          description: This field contains the cardholder's browser language as defined in IETF BCP 47.
+          examples:
+            - en
+      description: BrowserDetails Object capturing Browser Finger Printing attributes required for ThreeDSecureAuthentication
+      examples:
+        - UserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+          JavaEnabled: true
+          ScreenColorDepth: '1'
+          ScreenWidth: '1080'
+          ScreenHeight: '840'
+          TimeZone: '2'
+          AcceptHeader: application/json
+          BrowserLanguage: en
+      x-stoplight:
+        id: wls87jvtk5x9r
+    DirectConnectResponse:
+      title: DirectConnectResponse
+      type: object
+      description: This is the response payload for the DirectConnect method
+      x-stoplight:
+        id: 25dvorvbn8cj0
+      required:
+        - PspId
+        - BankResponse
+        - BankAccept
+        - CardToken
+        - RedirectUrl
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        PspId:
+          type: integer
+          description: This field contains the Gateway Unique Transaction ID
+          contentEncoding: int64
+          examples:
+            - 738220
+          x-stoplight:
+            id: ongptggnjx1fi
+        BankResponse:
+          description: This field represent the transaction state as received from the Bank
+          examples:
+            - Processed
+          x-stoplight:
+            id: fajg6sf8asija
+          enum:
+            - Pending
+            - Decline
+            - Processed
+            - 'NULL'
+        BankAccept:
+          type: boolean
+          description: A boolean value whether the bank has accepted the request or not
+          x-stoplight:
+            id: egdw5z65oeo8r
+        CardToken:
+          type: string
+          description: Captures a card representation in the form of token
+          examples:
+            - 9705594a-365d-4157-84a8-5af04bbb8507
+          x-stoplight:
+            id: vc4cciy20j1sd
+        RedirectUrl:
+          type: string
+          description: This field captures the redirectURL as supplied by the Bank
+          examples:
+            - 'https://api.dev.apspglobal.com/technicalsupporttool-fe/Redirect/'
+          x-stoplight:
+            id: 61iwvvoxd2dke
+        IsSuccess:
+          type: boolean
+          description: This field contains whether the Transaction was a successful attempt or not
+          examples:
+            - true
+          x-stoplight:
+            id: qwigh8k0pqno4
+        ErrorMessage:
+          type: string
+          description: This field captures any error message as received from the Bank.
+          examples:
+            - Card Limit Exceeded
+          x-stoplight:
+            id: f3ny2debj4und
+    DirectConnectUnauthorizedException:
+      title: DirectConnectUnauthorizedException
+      type: object
+      description: This is the Direct Connect Exception Payload
+      examples:
+        - isSuccess: false
+          errorMessage: Unauthorized
+      x-stoplight:
+        id: 4i0w3a0lulojc
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field captures whether the transaction attempt was successful or not
+          examples:
+            - false
+          x-stoplight:
+            id: nyp7lcxxqiol3
+        ErrorMessage:
+          type: string
+          description: This field captures the error message as received by the Gateway or Bank
+          examples:
+            - Unauthorized
+          x-stoplight:
+            id: farb2zkbe1ld4
+    DirectConnectBadRequestException:
+      title: DirectConnectBadRequestException
+      type: object
+      description: This is the Direct Connect Exception Payload - Bad Request
+      examples:
+        - isSuccess: false
+          errorMessage: Invalid Signature
+      x-stoplight:
+        id: oc98m2bz55zxb
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field captures whether the transaction attempt was successful or not
+          examples:
+            - false
+          x-stoplight:
+            id: op0z6ake2n9ov
+        ErrorMessage:
+          type: string
+          description: This field captures the error message as received by the Gateway or Bank
+          examples:
+            - Invalid Signature
+          x-stoplight:
+            id: fn9ox9d23u4s0
+    HostedPaymentPageTransactionTypes:
+      title: HostedPaymentPageTransactionTypes
+      enum:
+        - AUTH
+        - PURC
+      type: string
+      description: Supported Transaction Types
+      x-stoplight:
+        id: 2e1j1x0m6hpw6
+    UserDefineDataObject:
+      title: UserDefineDataObject
+      type: object
+      description: UserDefinedData Object is a key value pair structure whereby one can use to add additional data to the Payment Request which is then sent back in the final Payment Callback. The Maximum allowable limit is of 5 attributes.
+      x-stoplight:
+        id: a3eq5g0bzhqvc
+      properties:
+        DefinedField1:
+          type: string
+          description: User Defined Key Reference 1
+          examples:
+            - UserDefinedKey1
+          x-stoplight:
+            id: gy79il19nt1pu
+          example: ValueToDefinedField1
+        ...:
+          type: string
+          x-stoplight:
+            id: d39w37exwqy8r
+        DefinedFieldN:
+          type: string
+          description: User Defined Key Reference N
+          examples:
+            - UserDefinedKeyN
+          example: ValueToDefinedFieldN
+          x-stoplight:
+            id: s9lkcrh56ymqs
+    UserInputsObject:
+      title: UserInputsObject
+      x-stoplight:
+        id: mo5hlo4alim97
+      type: object
+      description: 'UserInputs Object is a DYNAMIC structure which is populated based on additional data which is supplied by the user during the payment process during the Apcopay HPP flow. This Object is transmitted only if the ShowUI Feature Flag in the HPP request is set to TRUE. If ALL mandatory fields required by the specific Provider are filled, then this object is NOT populated. If SOME mandatory fields required by the specific Provider are filled, then ONLY the fields filled by the User are populated within this object. The final hierarchy and contents of the object is dependent on the specific Provider requirements. Notwithstanding, mandatory attributes required in the main request object such as Client.Email will follow the same structure or the main request. Kindly check the Provider specific documentation.'
+      properties:
+        Client:
+          $ref: '#/components/schemas/ClientNotificationObject'
+          description: UserInput Client Object
+          x-stoplight:
+            id: zlvelyjlx96yf
+        ...:
+          type: string
+          description: Additional Data supplied by the User
+        PaymentMethodData:
+          $ref: '#/components/schemas/HPPPaymentMethodDataObject'
+          description: UserInput Payment Method Data
+          x-stoplight:
+            id: delipr655h9tp
+    PaymentMethodDataObject:
+      title: PaymentMethodDataObject
+      x-stoplight:
+        id: rjioq1vlm6zz0
+      type: object
+      description: PaymentMethodData Object is a key value pair structure whereby one needs to supply additional data to the PayOut / OCT request using attributes names and values as required by the specific Alternative Payment Method. This Object will need to be supplied in conjunction to the PaymentMethod = AlternativePaymentMethods within the PaymentDestination Section.
+      properties:
+        AlternativePaymentMethodParameter1:
+          type: string
+          description: AlternativePaymentMethodParamter Key Reference 1
+          examples:
+            - UserDefinedKey1
+          example: ValueToAlternativePaymentMethodParameter1
+          x-stoplight:
+            id: 9gmk66tyd4tri
+        ...:
+          type: string
+          example: anyOtherValue
+        AlternativePaymentMethodParameterN:
+          type: string
+          description: AlternativePaymentMethodParamter Key Reference N
+          examples:
+            - UserDefinedKeyN
+          example: ValueToAlternativePaymentMethodParameterN
+          x-stoplight:
+            id: 210mveuzl9qff
+    ProviderOriginatingDataObject:
+      title: ProviderOriginatingDataObject
+      x-stoplight:
+        id: bgacpa5rrley2
+      type: object
+      description: ProviderOriginatingDataObject is a key value pair structure that is populated if the specific provider provides additional transaction information that can be shared with the merchant.
+      properties:
+        ProviderOriginatingData1:
+          type: string
+          description: AlternativePaymentMethodParamter Key Reference 1
+          examples:
+            - UserDefinedKey1
+          example: ValueToAlternativePaymentMethodParameter1
+          x-stoplight:
+            id: i4nklbk2gpo9s
+        ...:
+          type: string
+          example: anyOtherValue
+        ProviderOriginatingDataN:
+          type: string
+          description: AlternativePaymentMethodParamter Key Reference N
+          examples:
+            - UserDefinedKeyN
+          example: ValueToAlternativePaymentMethodParameterN
+          x-stoplight:
+            id: 18k48tsskgb5b
+    ThreeDSecureFlowOptions:
+      title: ThreeDSecureFlowOptions
+      enum:
+        - CHALLENGE
+        - FRICTIONLESS
+      type: string
+      description: Enumeration that defines threeDSecureFlow Options
+      examples:
+        - CHALLENGE
+      x-stoplight:
+        id: bn30tk2i92aa0
+    ThreeDProtocolVersionOptions:
+      title: threeDProtocolVersionOptions
+      description: This Enumeration defines the threeDProtocolVersion Options
+      examples:
+        - 2.1.0
+      x-stoplight:
+        id: ytkx5rs84rd7x
+      enum: []
+    HostedPaymentPageResponse:
+      title: HostedPaymentPageResponse
+      type: object
+      description: This is the response payload for the HostedPaymentPage method
+      examples:
+        - pspid: 739005
+          token: f86dff7b36aa4401bbb92c88280d6db4
+          redirectUrl: 'https://payments.dev.apspglobal.com/merchanttools/api/Redirect/Loader?token=f86dff7b36aa4401bbb92c88280d6db4'
+          status: PENDING
+          isSuccess: true
+          errorMessage: null
+      x-stoplight:
+        id: 2hmi4rmrgnqee
+      required:
+        - PspID
+        - Token
+        - Status
+        - RedirectUrl
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        PspID:
+          type: integer
+          description: This field contains the Gateway Unique Transaction ID
+          contentEncoding: int64
+          examples:
+            - 738220
+          x-stoplight:
+            id: 8jbxnnymgxiih
+        Token:
+          type: string
+          description: This field represent the token for the HPP redirect URL instance
+          examples:
+            - f86dff7b36aa4401bbb92c88280d6db4
+          x-stoplight:
+            id: g1v2wv26zal55
+        Status:
+          description: A value capturing the payment status
+          examples:
+            - PENDING
+          x-stoplight:
+            id: bzu4oyrn1fi0o
+          enum:
+            - PENDING
+            - DECLINED
+            - 'NULL'
+        RedirectUrl:
+          type: string
+          description: This field captures the redirectURL of the Hosted Payment Page
+          examples:
+            - 'https://payments.dev.apspglobal.com/merchanttools/api/Redirect/Loader?token=f86dff7b36aa4401bbb92c88280d6db4'
+          x-stoplight:
+            id: qx56kslu4km5s
+        IsSuccess:
+          type: boolean
+          description: This field contains whether the Transaction was a successful attempt or not
+          examples:
+            - true
+          x-stoplight:
+            id: 8h5dq1t0fxxnt
+        ErrorMessage:
+          type: string
+          description: This field captures any error message as received from the Bank.
+          examples:
+            - Card Limit Exceeded
+          x-stoplight:
+            id: j5fk8ka9bzrk6
+    HostedPaymentPageUnauthorizedException:
+      title: HostedPaymentPageUnauthorizedException
+      type: object
+      description: This is the HostedPaymentPage Exception Payload
+      examples:
+        - isSuccess: false
+          errorMessage: Unauthorized
+      x-stoplight:
+        id: xkjbntc3athuu
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field captures whether the transaction attempt was successful or not
+          examples:
+            - false
+          x-stoplight:
+            id: 4tn17m7f27qf3
+        ErrorMessage:
+          type: string
+          description: This field captures the error message as received by the Gateway or Bank
+          examples:
+            - Unauthorized
+          x-stoplight:
+            id: q41kglonzhb8n
+    DirectConnectRouting:
+      title: DirectConnectRouting
+      type: object
+      description: This Captures the Direct Connect Routing Object
+      examples:
+        - ForceBank: PTEST
+      x-stoplight:
+        id: mhjyy1bijme91
+      properties:
+        ForceBank:
+          type: string
+          description: Indicates the Bank that the transaction will be routed to process the transaction. This overrides any Bank/s set up at configuration time. This also overrides any routing configuration applied to Bank Routing
+          examples:
+            - PTEST
+          example: TRUEVO
+        ForceMID:
+          type: string
+          x-stoplight:
+            id: hqxzv2pst8881
+          description: "Forces the usage of that specific MID for routing traffic\t"
+          example: MID1354451511
+    HostedPaymentPageRouting:
+      title: HostedPaymentPageRouting
+      type: object
+      description: This Captures the HostedPaymentPage Routing Object
+      x-stoplight:
+        id: shw5qdqhrz592
+      properties:
+        ForceBank:
+          type: string
+          description: Indicates the Bank that the transaction will be routed to process the transaction. This overrides any Bank/s set up at configuration time. This also overrides any routing configuration applied to Bank Routing
+          examples:
+            - PTEST
+          example: BOVPAYON
+        ForcePayment:
+          type: string
+          description: Indicates the Alternate Payment Method that the transaction will be routed to process the transaction. This overrides any Bank/s set up at configuration time. This also overrides any routing configuration applied to Bank /APM Routing
+          examples:
+            - CARDS
+          default: CARDS
+          example: SKRILL
+        MainAcquirer:
+          type: string
+          x-stoplight:
+            id: n060swbzvm0ts
+          example: TRUEVO
+          description: The main acquirer that should be used for routing traffic in case more than 1 Acquirers are available
+        ForceMID:
+          type: string
+          x-stoplight:
+            id: rao9jpwqkkmid
+          description: "Forces the usage of that specific MID for routing traffic\t"
+          example: MID92483
+    TokenisedCardsResponse:
+      title: TokenisedCardsResponse
+      type: object
+      description: This is the response object for the Tokenised Cards Get Operation
+      x-stoplight:
+        id: h1qnvhm4ft93k
+      required:
+        - CardsData
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        CardsData:
+          $ref: '#/components/schemas/TokenisedCardsResponseCardsData'
+          x-stoplight:
+            id: yypxi9jx885w6
+        IsSuccess:
+          type: boolean
+          description: This field indicates whether the request has been successful or not
+          examples:
+            - true
+          x-stoplight:
+            id: hrcn76uvi1sve
+        ErrorMessage:
+          type: string
+          description: This field captures the error message if an error encountered
+          examples:
+            - No records found
+          x-stoplight:
+            id: ojn1zqhhd1jq6
+    DeleteTokenisedCardsResponse:
+      title: DeleteTokenisedCardsResponse
+      x-stoplight:
+        id: pq9mau3j0qlvt
+      type: object
+      description: This is the response object for the Delete Tokenised Cards Operation
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field indicates whether the request has been successful or not
+          examples:
+            - true
+          default: true
+        ErrorMessage:
+          type: string
+          description: This field captures the error message if an error encountered
+          examples:
+            - No records found
+    TokenisedCardsObjectArray:
+      title: TokenisedCardsObjectArray
+      type: object
+      description: This is the array object returned within the Tokenised Cards Response
+      x-stoplight:
+        id: 9naa858skfs3v
+      required:
+        - CardToken
+        - CardHolderName
+        - MaskedCard
+        - ExpMonth
+        - ExpYear
+        - CardLastUsed
+      properties:
+        CardToken:
+          type: string
+          description: A GUID based representation of a tokenised card
+          contentEncoding: uuid
+          examples:
+            - 181767b2-bcfe-40bd-959f-cf78072c2bf8
+          format: uuid
+          x-stoplight:
+            id: ggb23x5hfcl91
+        CardHolderName:
+          type: string
+          x-stoplight:
+            id: zz0v6q2l5ga2p
+          description: Indicates the Card Holder Name & Surname
+        MaskedCard:
+          type: string
+          description: The masked card number (PAN)
+          examples:
+            - 479000****8019
+          x-stoplight:
+            id: xoukv4mi45rrz
+          maxLength: 19
+          example: 454647******1312
+        ExpMonth:
+          type: integer
+          description: Specifies the Month part of the Card Expiry
+          contentEncoding: int64
+          examples:
+            - 479000
+          x-stoplight:
+            id: sip542kmqyfpp
+        ExpYear:
+          type: integer
+          description: Specifies the Year part of the Card Expiry
+          contentEncoding: int32
+          examples:
+            - 8019
+          x-stoplight:
+            id: khcjapmrfcnrf
+        CardLastUsed:
+          type: integer
+          x-stoplight:
+            id: 8fn27415trqho
+          format: int32
+          example: 1695108453
+          description: This field represents an epoch timestamp of when the card was succesfully used
+    GenericUnauthorizedException:
+      title: GenericUnauthorizedException
+      type: object
+      description: This is the Generic Unauthorised Exception Payload
+      examples:
+        - isSuccess: false
+          errorMessage: Unauthorized
+      x-stoplight:
+        id: rnzeuuh4mzllk
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field captures whether the transaction attempt was successful or not
+          examples:
+            - false
+          x-stoplight:
+            id: akz2que3b2cg4
+        ErrorMessage:
+          type: string
+          description: This field captures the error message as received by the Gateway or Bank
+          examples:
+            - Unauthorized
+          x-stoplight:
+            id: u38zhbl7m7jbi
+    TransactionStatusObject:
+      title: TransactionStatusObject
+      type: object
+      description: TransactionStatusObject
+      x-stoplight:
+        id: vgd2qrbgmt0aa
+      properties:
+        AttemptNumber:
+          type: integer
+          description: Specifies the callback attempts to send the payment notification linked to the specific pspid
+          contentEncoding: int32
+          examples:
+            - 1
+          example: 1
+        SentDateTime:
+          type: integer
+          description: This field represents the Epoch Timestamp of when the specific transaction has been received
+          contentEncoding: int64
+          examples:
+            - 1695108453
+          example: 1720789324
+        UDF:
+          $ref: '#/components/schemas/UserDefineDataObject'
+          description: User-Defined Data. Any additional information you want to be passed back to you after payment completion.
+        TransactionToken:
+          type: string
+          x-stoplight:
+            id: 4bibedxj3ech0
+          example: 729ca722364f47448a94bb27a3399317
+          description: The Hosted Payment Page token used for the Payment Process
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.
+          examples:
+            - ord001-13523
+          example: '35738128'
+        Status:
+          description: A value capturing the payment status.
+          examples:
+            - Approved
+          enum:
+            - Processed
+            - Declined
+            - Pending
+        AuthCode:
+          type: string
+          description: Indicates the Bank authorisation code
+          examples:
+            - '21335232385'
+          example: '123456'
+        CardInput:
+          type: boolean
+          description: Indicates whether a card has been inputted or not
+          examples:
+            - true
+        PspId:
+          type: integer
+          description: This field contains the Gateway Unique Transaction ID
+          contentEncoding: int32
+          examples:
+            - 736928
+          example: 767867
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+          example: EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount that has been processed.
+          examples:
+            - 9.99
+          example: 11.09
+        BankMessage:
+          type: string
+          description: Indicates the Bank Response of the specific transaction attempt
+          examples:
+            - Insufficient Funds
+        CardNumber:
+          type: number
+          description: Specifies the Masked Card Primary Account Number (Card Number) which typically is between 14 to 19 digit
+          examples:
+            - 4435921234566268
+          example: 4444444444444444
+        CardExpiry:
+          type: string
+          description: Specifies the Month/Year part of the Card Expiry
+          examples:
+            - 02/2025
+        CardHolderName:
+          type: string
+          description: Indicates the Card Holder Name & Surname
+          examples:
+            - John Doe
+        CardCountry:
+          type: string
+          description: Country in Alpha-2 code of the card issuing bank
+          examples:
+            - CHE
+          example: Italy
+        CardType:
+          type: string
+          description: Specifies the type of Card Scheme Provider
+          examples:
+            - VISA
+          example: VISA
+        CardToken:
+          type: string
+          description: Captures a card representation in the form of token
+          examples:
+            - 9705594a-365d-4157-84a8-5af04bbb8507
+        Acquirer:
+          type: string
+          description: Indicates the Acquiring Bank of the transaction
+          examples:
+            - TRUEVO
+          example: EMP
+        Email:
+          type: string
+          description: Email address of the customer or client.
+          examples:
+            - daniel.borg@test.com
+          example: joebloggs@mailinator.com
+        BankErrorCode:
+          type: string
+          x-stoplight:
+            id: u4cbgx9q0aoml
+          example: B2
+          description: This attribute captures the Bank Error Code when the transaction is declined by Bank. It is set null if the Transaction has been Approved.
+        UniqueReference:
+          type: string
+          x-stoplight:
+            id: fyph8fjs4sls6
+          description: Unique identifier generated for each and every attempt when performing a transaction
+          format: uuid
+          example: 00a00569-7b7d-43fa-a5d0-4aeb673c5a25
+        ClientAccount:
+          type: string
+          x-stoplight:
+            id: oakue2wgkk6d9
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          example: CliAcc01002
+        Is3DS:
+          type: boolean
+          description: Indicates whether a 3ds authentication has been performed or not
+          examples:
+            - false
+    ExtendedTransactionStatusObject:
+      title: ExtendedTransactionStatusObject
+      x-stoplight:
+        id: lcgwhz2n3dfa5
+      type: object
+      description: ExtendedTransactionStatusObject
+      properties:
+        AttemptNumber:
+          type: integer
+          description: Specifies the callback attempts to send the payment notification linked to the specific pspid
+          contentEncoding: int32
+          examples:
+            - 1
+        SentDateTime:
+          type: integer
+          description: This field represents the Epoch Timestamp of when the specific transaction has been received
+          contentEncoding: int64
+          examples:
+            - 1695108453
+        UDF:
+          $ref: '#/components/schemas/UserDefineDataObject'
+          description: User-Defined Data. Any additional information you want to be passed back to you after payment completion.
+        TransactionToken:
+          type: string
+          example: 729ca722364f47448a94bb27a3399317
+          description: The Hosted Payment Page token used for the Payment Process
+        OrderReference:
+          type: string
+          description: Merchant Unique Transaction Reference.
+          examples:
+            - ord001-13523
+        Status:
+          type: string
+          description: A value capturing the payment status - (APPROVED / PENDING / DECLINED)
+          examples:
+            - Approved
+        AuthCode:
+          type: string
+          description: Indicates the Bank authorisation code
+          examples:
+            - '21335232385'
+        CardInput:
+          type: boolean
+          description: Indicates whether a card has been inputted or not
+          examples:
+            - true
+        PspId:
+          type: integer
+          description: This field contains the Gateway Unique Transaction ID
+          contentEncoding: int32
+          examples:
+            - 736928
+        Currency:
+          type: string
+          description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+          examples:
+            - EUR
+        Amount:
+          type: number
+          description: Indicates the transaction amount that has been processed.
+          examples:
+            - 9.99
+        BankMessage:
+          type: string
+          description: Indicates the Bank Response of the specific transaction attempt
+          examples:
+            - Insufficient Funds
+        CardNumber:
+          type: string
+          description: Specifies the Masked Card Primary Account Number (Card Number) which typically is between 14 to 19 digit
+          examples:
+            - 443592******6268
+        CardExpiry:
+          type: string
+          description: Specifies the Month/Year part of the Card Expiry
+          examples:
+            - 02/2025
+        CardHolderName:
+          type: string
+          description: Indicates the Card Holder Name & Surname
+          examples:
+            - John Doe
+        CardCountry:
+          type: string
+          description: Country in Alpha-2 code of the card issuing bank
+          examples:
+            - CHE
+        CardType:
+          type: string
+          description: Specifies the type of Card Scheme Provider
+          examples:
+            - VISA
+        CardToken:
+          type: string
+          description: Captures a card representation in the form of token
+          examples:
+            - 9705594a-365d-4157-84a8-5af04bbb8507
+        Acquirer:
+          type: string
+          description: Indicates the Acquiring Bank of the transaction
+          examples:
+            - TRUEVO
+        Email:
+          type: string
+          description: Email address of the customer or client.
+          examples:
+            - daniel.borg@test.com
+        BankErrorCode:
+          type: string
+          example: B2
+          description: This attribute captures the Bank Error Code when the transaction is declined by Bank. It is set null if the Transaction has been Approved.
+        UniqueReference:
+          type: string
+          description: Unique identifier generated for each and every attempt when performing a transaction
+          format: uuid
+          example: 00a00569-7b7d-43fa-a5d0-4aeb673c5a25
+        ClientAccount:
+          type: string
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          example: CliAcc01002
+        Is3DS:
+          type: boolean
+          description: Indicates whether a 3ds authentication has been performed or not
+          examples:
+            - false
+        UserInputs:
+          $ref: '#/components/schemas/UserInputsObject'
+          x-stoplight:
+            id: 8tf9l363v892f
+          description: 'UserInputs Object is a DYNAMIC structure which is populated based on additional data which is supplied by the user during the payment process during the Apcopay HPP flow. This Object is transmitted only if the ShowUI Feature Flag in the HPP request is set to TRUE. If ALL mandatory fields required by the specific Provider are filled, then this object is NOT populated. If SOME mandatory fields required by the specific Provider are filled, then ONLY the fields filled by the User are populated within this object. The final hierarchy and contents of the object is dependent on the specific Provider requirements. Notwithstanding, mandatory attributes required in the main request object such as Client.Email will follow the same structure or the main request. Kindly check the Provider specific documentation.'
+        ProviderOriginatingData:
+          $ref: '#/components/schemas/ProviderOriginatingDataObject'
+          x-stoplight:
+            id: 3ahhio7v3ypbr
+          description: ProviderOriginatingDataObject is a key value pair structure that is populated if the specific provider provides additional transaction information that can be shared with the merchant.
+    GenericBadRequestException:
+      title: GenericBadRequestException
+      type: object
+      description: This is the Generic Exception Payload - Bad Request
+      x-stoplight:
+        id: v6xfzy271z3g6
+      required:
+        - IsSuccess
+        - ErrorMessage
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field captures whether the transaction attempt was successful or not
+          examples:
+            - false
+          x-stoplight:
+            id: 9kjoofuuowm70
+        ErrorMessage:
+          type: string
+          description: This field captures the error message as received by the Gateway or Bank
+          examples:
+            - Invalid Signature
+          x-stoplight:
+            id: 1da7mw7lkkegk
+    CreateaHostedPaymentPageTokenRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/HostedPaymentPageRequest'
+      contentMediaType: application/json
+      x-stoplight:
+        id: oyksw7yqcmuwa
+    CreateaHostedPaymentPageTokenResponse200:
+      allOf:
+        - $ref: '#/components/schemas/HostedPaymentPageResponse'
+        - examples:
+            - pspid: 739005
+              token: f86dff7b36aa4401bbb92c88280d6db4
+              redirectUrl: 'https://payments.dev.apspglobal.com/merchanttools/api/Redirect/Loader?token=f86dff7b36aa4401bbb92c88280d6db4'
+              status: PENDING
+              isSuccess: true
+              errorMessage: null
+      contentMediaType: application/json
+      x-stoplight:
+        id: gepxzmjzjmt2l
+    PaymentOperationAUTHPURCRequestBody:
+      oneOf:
+        - $ref: '#/components/schemas/DirectConnectRequestAuth'
+        - $ref: '#/components/schemas/DirectConnectRequestPurc'
+        - $ref: '#/components/schemas/DirectConnectRequestPayout'
+          x-stoplight:
+            id: 3xy1f4jdrfbsy
+      x-stoplight:
+        id: bxp1n7h3o1ndt
+    CaptureOrRefundPaymentRequestBody:
+      oneOf:
+        - $ref: '#/components/schemas/DirectConnectRequestCapt'
+        - $ref: '#/components/schemas/DirectConnectRequestRefund'
+        - $ref: '#/components/schemas/DirectConnectRequestVoid'
+      contentMediaType: application/json
+      x-stoplight:
+        id: 8bbbjvvcqunca
+    TokeniseCardRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/TokeniseCardRequest'
+      contentMediaType: application/json
+      x-stoplight:
+        id: v5qxrour36mi2
+    TokenisedCardsResponse200:
+      allOf:
+        - $ref: '#/components/schemas/TokenisedCardsResponse'
+      contentMediaType: application/json
+      x-stoplight:
+        id: pw2iscgjllwib
+    DeleteTokenisedCardsResponse200:
+      allOf:
+        - $ref: '#/components/schemas/DeleteTokenisedCardsResponse'
+      x-stoplight:
+        id: wg4in2q63cq1w
+      contentMediaType: application/json
+    ThreeDSecureAuthenticationThreeDSecureFlow:
+      allOf:
+        - $ref: '#/components/schemas/ThreeDSecureFlowOptions'
+        - description: Specifies the ThreeDSecureFlow Type. It can be either CHALLENGE or FRICTIONLESS
+          examples:
+            - CHALLENGE
+      x-stoplight:
+        id: x33fyrplhxks5
+    ThreeDSecureAuthenticationThreeDVersion:
+      allOf:
+        - $ref: '#/components/schemas/ThreeDProtocolVersionOptions'
+        - description: Protocol version identifier This shall be the Protocol Version Number of the specification utilised by the system creating this message. One of 2.1.0 or 2.2.0
+          examples:
+            - 2.2.0
+      x-stoplight:
+        id: urbybcv02s2ll
+    HostedPaymentPageRequestTransactionType:
+      allOf:
+        - $ref: '#/components/schemas/HostedPaymentPageTransactionTypes'
+      x-stoplight:
+        id: 061gnrj9d3ea1
+    HostedPaymentPageRequestUDF:
+      $ref: '#/components/schemas/UserDefineDataObject'
+      description: User-Defined Data. Any additional information you want to be passed back to you after payment completion.
+      x-stoplight:
+        id: wpvmw3wpqd6wm
+    HostedPaymentPageRequestRouting:
+      allOf:
+        - $ref: '#/components/schemas/HostedPaymentPageRouting'
+        - description: Routing object capturing all routing configuration that can be conditioned at invocation time
+          examples:
+            - ForcePayment: CARDS
+              ForceBank: PTEST
+      x-stoplight:
+        id: 585mtbhfqr9np
+    DirectConnectRequestBrowserDetails:
+      allOf:
+        - $ref: '#/components/schemas/BrowserDetails'
+        - description: BrowserDetails Object capturing Browser Finger Printing attributes required for ThreeDSecureAuthentication
+          examples:
+            - UserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+              JavaEnabled: true
+              ScreenColorDepth: '1'
+              ScreenWidth: '1080'
+              ScreenHeight: '840'
+              TimeZone: '2'
+              AcceptHeader: application/json
+              BrowserLanguage: en
+      x-stoplight:
+        id: 8etdufrrnu48g
+    DirectConnectRequestThreeDSecureAuthentication:
+      allOf:
+        - $ref: '#/components/schemas/ThreeDSecureAuthentication'
+        - description: ThreeDSecureAuthentication Object capturing ThreeDSecure Authentication attributes. This is supported from select Acquirers.
+          examples:
+            - eci: '07'
+              xid: aGVsbG8xMjM0NQ==
+              dsTransactionId: be395b1a6ab345cfb6688e6737413ba3
+              acsTransID: be395b1a6ab345cfb6688e6737413ba3
+              challengeIndicator: '01'
+              transStatus: 'Y'
+              threeDSecureFlow: CHALLENGE
+              cavv: d29ybGQ1NDMyMQ==
+              threeDVersion: 2.2.0
+      x-stoplight:
+        id: v5efu69z3093i
+    DirectConnectRequestRouting:
+      allOf:
+        - $ref: '#/components/schemas/DirectConnectRouting'
+          description: Routing Object intended to Capture all routing related configuration
+      x-stoplight:
+        id: 29iv86yomfhak
+    TokenisedCardsResponseCardsData:
+      type: array
+      items:
+        $ref: '#/components/schemas/TokenisedCardsObjectArray'
+      description: An Array of Tokenised Cards Object
+      x-stoplight:
+        id: ta24rwehoesuo
+    CardObject:
+      title: CreditCardObject
+      type: object
+      description: The Card Object captures Full Card Details
+      x-stoplight:
+        id: ycvfno4w59m24
+      required:
+        - PaymentSource
+        - CardType
+        - CardNumber
+        - CvV2
+        - ExpMonth
+        - ExpYear
+      properties:
+        PaymentSource:
+          type: string
+          x-stoplight:
+            id: 0t5pdewfoe5rm
+          default: Card
+          example: Card
+        CardType:
+          type: string
+          x-stoplight:
+            id: wnuby7qx4drbt
+          description: 'Specifies the type of Card Scheme Provider. Should be an Enum consisting of VISA, MASTERCARD,etc'
+          writeOnly: true
+        CardNumber:
+          type: integer
+          x-stoplight:
+            id: pogmf35hf5hgg
+          description: Specifies the Card Primary Account Number (Card Number) which typically is between 14 to 19 digit
+          example: 4444444444444448
+        CvV2:
+          type: integer
+          x-stoplight:
+            id: dkbxwhgej3l7a
+          example: 123
+          format: int32
+          description: Specifies the Card Verification Value (CVV/CVC/CSC etc)
+          writeOnly: true
+        ExpMonth:
+          type: integer
+          x-stoplight:
+            id: iukkjrcoas368
+          format: int32
+          example: 12
+          description: Specifies the Month part of the Card Expiry
+          minimum: 1
+          maximum: 12
+          writeOnly: true
+        ExpYear:
+          type: integer
+          x-stoplight:
+            id: szd7c6yiplfky
+          format: int32
+          example: 2024
+          description: Specifies the Year part of the Card Expiry
+          writeOnly: true
+        CardHolderName:
+          type: string
+          x-stoplight:
+            id: ao49p5n60h1nj
+          description: Indicates the Card Holder Name & Surname
+          example: Joe Smith
+          writeOnly: true
+    ApplePayTokenObject:
+      title: ApplePayTokenObject
+      x-stoplight:
+        id: tlnwuu5iogzjx
+      type: object
+      description: The Card Object captures Full Card Details
+      examples:
+        - CardToken: 9705594a-365d-4157-84a8-5af04bbb8507
+          CvV2: 123
+      required:
+        - PaymentSource
+        - ProviderToken
+        - CardType
+        - ExpMonth
+        - 'ExpYear '
+      properties:
+        PaymentSource:
+          type: string
+          default: ApplePayToken
+          example: ApplePayToken
+          description: Payment Credentials used for the Payment
+        ProviderToken:
+          type: string
+          description: Device-specific account number of the card that funds this transaction
+          x-stoplight:
+            id: m3doaiuvstkh7
+          writeOnly: true
+        CardType:
+          type: string
+          x-stoplight:
+            id: vatte18mpblrl
+          description: The type of Card Scheme Provider
+        ExpMonth:
+          type: string
+          x-stoplight:
+            id: 9femgzwxlktt3
+          description: The Month part of the Card Expiry
+        'ExpYear ':
+          type: string
+          x-stoplight:
+            id: fkxfs602qu9zx
+          description: ' The Year part of the Card Expiry'
+        Cryptogram:
+          type: string
+          x-stoplight:
+            id: oujcvlqavzumw
+          description: 'Online payment cryptogram, as defined by 3D Secure'
+        ECI:
+          type: string
+          x-stoplight:
+            id: vcbyupoijajod
+          description: The electronic commerce indicator. Indicates the outcome of authentication attempted on transactions enforced by 3DS.
+        DeviceId:
+          type: string
+          x-stoplight:
+            id: bid6njb4c3rwh
+          description: Hex-encoded device manufacturer identifier
+    CardTokenObject:
+      title: CardTokenObject
+      type: object
+      description: The Card Token Object captures the Tokenized Card as generated from the Apcopay Layer
+      required:
+        - PaymentSource
+        - CardToken
+        - CvV2
+      properties:
+        PaymentSource:
+          type: string
+          x-stoplight:
+            id: vj73izm51oesz
+          default: CardToken
+          example: CardToken
+        CardToken:
+          type: string
+          description: Captures a card representation in the form of token
+          writeOnly: true
+        CvV2:
+          type: integer
+          example: 123
+          format: int32
+          description: Specifies the Card Verification Value (CVV/CVC/CSC etc)
+          writeOnly: true
+      x-stoplight:
+        id: u7uemx9dc33pw
+    GooglePayTokenObject:
+      title: GooglePayTokenObject
+      x-stoplight:
+        id: 0e91orksywdfe
+      type: object
+      description: The Card Object captures Full Card Details
+      required:
+        - PaymentSource
+        - ProviderToken
+        - CardType
+        - ExpMonth
+        - ExpYear
+      properties:
+        PaymentSource:
+          type: string
+          default: GooglePayToken
+          example: GooglePayToken
+          description: Payment Credentials used for the Payment
+        ProviderToken:
+          type: string
+          description: Device-specific account number of the card that funds this transaction
+          x-stoplight:
+            id: u9kqnrdgpef3e
+          writeOnly: true
+        CardType:
+          type: string
+          x-stoplight:
+            id: r4k4cg36qzjj0
+          description: The type of Card Scheme Provider
+        ExpMonth:
+          type: string
+          x-stoplight:
+            id: 5ugxepklf6612
+          description: The Month part of the Card Expiry
+        ExpYear:
+          type: string
+          x-stoplight:
+            id: jbks7zrjkr1c7
+          description: The Year part of the Card Expiry
+        Cryptogram:
+          type: string
+          x-stoplight:
+            id: ai1oa63ah4cnl
+          description: 'Online payment cryptogram, as defined by 3D Secure {optional , available only in cryptogram_3ds flow offered by GooglePay}'
+        ECI:
+          type: string
+          x-stoplight:
+            id: aeoeda2iefkr1
+          description: 'The electronic commerce indicator. Indicates the outcome of authentication attempted on transactions enforced by 3DS. - {optional , available only in cryptogram_3ds flow offered by GooglePay}'
+    TransactionReferenceObject:
+      title: TransactionReferenceObject
+      x-stoplight:
+        id: 1qlsmjwgsc4qq
+      type: object
+      description: The TransactionReferenceObject enables the use of a previously processed transaction to be used as reference for other transaction types such as Repeat Authorization / Repeat Purchase which are commonly used in MIT scenarios
+      required:
+        - PaymentSource
+      properties:
+        PaymentSource:
+          type: string
+          default: TransactionReference
+          example: TransactionReference
+          description: Payment Credentials used for the Payment
+    CardsPayObject:
+      title: CardsPayObject
+      x-stoplight:
+        id: mlfk7v2ubcdzi
+      type: object
+      description: 'The CardsPayObject enables the use of Card Details OR CardToken OR RawToken to be used for OCT / Payout Scenarios. '
+      required:
+        - PaymentMethod
+      properties:
+        PaymentMethod:
+          type: string
+          example: Card
+          description: Payment Method used for the Payout or OCT Scenarios
+        CardNumber:
+          type: integer
+          description: Specifies the Card Primary Account Number (Card Number) which typically is between 14 to 19 digit.
+          x-stoplight:
+            id: mi0qiq09k84x6
+          example: 4454454412346541
+          writeOnly: true
+        CvV2:
+          type: integer
+          description: 'Specifies the Card Verification Value (CVV/CVC/CSC etc). If CardToken or RawToke are supplied, this value can be left empty.'
+          x-stoplight:
+            id: vlhldprpje05p
+          format: int32
+          example: 321
+        ExpMonth:
+          type: integer
+          description: 'Specifies the Month part of the Card Expiry. If CardToken or RawToke are supplied, this value can be left empty.'
+          x-stoplight:
+            id: afl4xe3d334cb
+          format: int32
+          minimum: 1
+          maximum: 12
+        ExpYear:
+          type: integer
+          description: 'Specifies the Year part of the Card Expiry. If CardToken or RawToke are supplied, this value can be left empty.'
+          x-stoplight:
+            id: w0ty2wsouoxg8
+          format: int32
+          example: 2023
+          minimum: 2023
+        CardHolderName:
+          type: string
+          description: 'Indicates the Card Holder Name & Surname. If CardToken or RawToke are supplied, this value can be left empty.'
+          x-stoplight:
+            id: c7k33b0o2in9l
+          example: Joe Bloggs
+    CardTokenPayObject:
+      title: CardTokenPayObject
+      x-stoplight:
+        id: wmuf9kuvwhe40
+      type: object
+      description: 'The CardsPayObject enables the use of Card Details OR CardToken OR RawToken to be used for OCT / Payout Scenarios. '
+      required:
+        - PaymentMethod
+      properties:
+        PaymentMethod:
+          type: string
+          default: CardToken
+          example: CardToken
+          description: Payment Method used for the Payout or OCT Scenarios
+        CardToken:
+          type: string
+          description: Captures a card representation in the form of token
+          example: 9705594a-365d-4157-84a8-5af04bbb8507
+    AlternativePaymentMethodsPayObject:
+      title: AlternativePaymentMethodsPayObject
+      x-stoplight:
+        id: h3l1p72zuh8ra
+      type: object
+      description: 'The AlternativePaymentMethodsPayObject enables the use of AlternativePaymentMethod specific attributes to be used for Payout / OCT Scenarios. The details around the specific attribute name and attribute value to be used can be found in the specific documentation here: https://docs.apcopay.com/'
+      required:
+        - PaymentMethod
+        - PaymentMethodData
+      properties:
+        PaymentMethod:
+          type: string
+          default: AlternativePaymentMethods
+          example: AlternativePaymentMethods
+          description: Payment Method used for the Payout or OCT Scenarios
+        PaymentMethodData:
+          $ref: '#/components/schemas/PaymentMethodDataObject'
+          x-stoplight:
+            id: knt304nut69z8
+          description: PaymentMethodData Object is a key value pair structure whereby one needs to supply additional data to the PayOut / OCT request using attributes names and values as required by the specific Alternative Payment Method. This Object will need to be supplied in conjunction to the PaymentMethod = AlternativePaymentMethods within the PaymentDestination Section.
+    ConfigurationObject:
+      title: ConfigurationObject
+      x-stoplight:
+        id: 9mrvlhjmki14z
+      type: object
+      description: This model captures the HPP UI/UX custimisation parameters
+      properties:
+        Profile:
+          type: string
+          x-stoplight:
+            id: tbnmm8tn140uc
+          description: Hosted Payment Page Style to load during payment process as set from the Portal
+          example: DarkHPPProfile
+        AllowRetryonFail:
+          type: boolean
+          x-stoplight:
+            id: onpobo8vtqrok
+          default: false
+          description: 'If a Bank originating failures occur, this flag would allow for the user to retry and not redirect to the Merchant Redirect Page'
+        ShowSavedCards:
+          type: integer
+          x-stoplight:
+            id: pqnrmuderq6a7
+          description: "The number of saved cards to show linked to the specific Client account\r\n\r\n"
+          example: 2
+        CardHolderNameEdit:
+          type: boolean
+          x-stoplight:
+            id: 25z1gwrgtpqz8
+          default: false
+          description: 'If set to TRUE, the system will allow the CardHolderName value to be set during the card data entry process'
+        HidePayment:
+          type: string
+          x-stoplight:
+            id: 6oc0klzrjlrbm
+          example: 'Skrill, Neteller, Cards'
+          description: CSV of acquirers to hide in HPP PaymentWall
+        AllowAddNewCard:
+          type: boolean
+          x-stoplight:
+            id: 52yq63jl7wswm
+          description: 'If false and user has saved card, user is forced to use an existing card used in previous payments'
+        ShowWallets:
+          $ref: '#/components/schemas/ShowWalletsObject'
+          x-stoplight:
+            id: t1teis6p631qk
+          description: Hosted Payment Page Rendering Configuration that allows Merchant to determine whether to show ApplePay or Google Pay Buttons on Page
+    AntifraudObject:
+      title: AntiFraudObject
+      x-stoplight:
+        id: i5t58qg19a5mm
+      type: object
+      description: This model captures the HPP AntiFraud parameters
+      properties:
+        FraudProfile:
+          type: string
+          description: AntiFraud profile Name which has been previously configurethrough the portal
+          example: DarkHPPProfile
+          x-stoplight:
+            id: kbciro30h8746
+        CardRestrict:
+          type: boolean
+          default: false
+          description: 'Restricts the use of a specific pre-saved card in relation to a specific ClientAccount. The clientAccount is defined by the merchant, and can sent as part of the payload.'
+          x-stoplight:
+            id: pzzcg4yvta9jd
+    HPPPaymentMethodDataObject:
+      title: HPPPaymentMethodDataObject
+      x-stoplight:
+        id: s8ithzx6p7es7
+      type: object
+      description: This model is intended to capture additional attributes required by the specific Bank and/or Alternate Payment Method APM
+      properties:
+        AdditionalProviderParmeter1:
+          type: string
+          description: Addtional Provider Paramter 1
+          example: 'IBAN:IT60X0542811101000000123456'
+          x-stoplight:
+            id: 3d8ywg5lou5uk
+        AdditionalProviderParamterN:
+          type: string
+          x-stoplight:
+            id: uqlna94y47t0n
+          description: Addtional Provider Paramter N
+          example: 'CISNumber:9232233'
+    ClientObject:
+      title: ClientObject
+      x-stoplight:
+        id: iug7mcrgny9bi
+      type: object
+      description: A model capturing the client information
+      required:
+        - Email
+        - FirstName
+        - LastName
+        - City
+        - IPAddress
+      properties:
+        Email:
+          type: string
+          x-stoplight:
+            id: w633ggutuqwn0
+          description: Email address of the customer or client.
+          example: joe.bloggs@testjb.com
+        ClientAccount:
+          type: string
+          x-stoplight:
+            id: xscl8yizbxcmh
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          example: CliAcc01002
+        FirstName:
+          type: string
+          x-stoplight:
+            id: p6ei4s0kucay4
+          description: The first name of the customer or client.
+          example: Joe
+        LastName:
+          type: string
+          x-stoplight:
+            id: 6umb0usr0cdav
+          description: The last name of the customer or client.
+          example: Bloggs
+        Country:
+          type: string
+          x-stoplight:
+            id: 7gqnzrhssiqq7
+          description: Country in Alpha-3 code of the customer or client
+          example: MLT
+        MobileNo:
+          type: string
+          x-stoplight:
+            id: sxnisht2wwbc1
+          description: Mobile number of the customers or client
+          example: '00441234567'
+        Street:
+          type: string
+          x-stoplight:
+            id: m1h0if47etgji
+          description: The street name of the customer or client.
+          example: High Street
+        City:
+          type: string
+          x-stoplight:
+            id: 1etgpejmjdst1
+          description: "The city name where the customer or client is located.\r\n\r\n"
+          example: MagicCity
+        ZIPCode:
+          type: string
+          x-stoplight:
+            id: kve1sb3944okr
+          description: "The zipcode name where the customer or client is located.\r\n\r\n"
+          example: BGGC1234
+        State:
+          type: string
+          x-stoplight:
+            id: aaoakvolyzbmr
+          description: The State where the customer or client is located
+          example: UK
+        DateOfBirth:
+          type: string
+          x-stoplight:
+            id: 7vau72lfsc9iw
+          format: date
+          description: The Date of Birth of customer or client in YYYY-MM-DD format
+          example: '2924-12-31'
+        IPAddress:
+          type: string
+          x-stoplight:
+            id: g7a8sbh5vl22c
+          description: User’s IP Address as collected from the Merchant's Site/App
+          example: 214.21.134.79
+      examples:
+        - Email: joe.bloggs@testjb.com
+          ClientAccount: CliAcc01002
+          FirstName: Joe
+          LastName: Bloggs
+          Country: MLT
+          MobileNo: '00441234567'
+          Street: High Street
+          City: MagicCity
+          ZIPCode: BGGC1234
+          State: UK
+          DateOfBirth: '2924-12-31'
+          IPAddress: 214.21.134.79
+    ClientNotificationObject:
+      title: ClientNotificationObject
+      x-stoplight:
+        id: ywkpktw8vdsdp
+      type: object
+      description: A model capturing the client information
+      required:
+        - Email
+        - FirstName
+        - LastName
+        - City
+      properties:
+        Email:
+          type: string
+          description: Email address of the customer or client.
+          example: joe.bloggs@testjb.com
+        ClientAccount:
+          type: string
+          description: The field represents the client's account or user identifier. It typically refers to the unique identifier associated with a customer or client within your system. It helps in identifying and associating the payment request with the specific client account.
+          example: CliAcc01002
+        FirstName:
+          type: string
+          description: The first name of the customer or client.
+          example: Joe
+        LastName:
+          type: string
+          description: The last name of the customer or client.
+          example: Bloggs
+        Country:
+          type: string
+          description: Country in Alpha-3 code of the customer or client
+          example: MLT
+        MobileNo:
+          type: string
+          description: Mobile number of the customers or client
+          example: '00441234567'
+        Street:
+          type: string
+          description: The street name of the customer or client.
+          example: High Street
+        City:
+          type: string
+          description: "The city name where the customer or client is located.\r\n\r\n"
+          example: MagicCity
+        ZIPCode:
+          type: string
+          description: "The zipcode name where the customer or client is located.\r\n\r\n"
+          example: BGGC1234
+        State:
+          type: string
+          description: The State where the customer or client is located
+          example: UK
+        DateOfBirth:
+          type: string
+          format: date
+          description: The Date of Birth of customer or client in YYYY-MM-DD format
+          example: '2924-12-31'
+    ShowWalletsObject:
+      title: ShowWalletsObject
+      x-stoplight:
+        id: qeaoj1q1ukwaa
+      type: object
+      description: Hosted Payment Page Rendering Configuration that allows Merchant to determine whether to show ApplePay or Google Pay Buttons on HPP
+      properties:
+        ApplePay:
+          type: boolean
+          x-stoplight:
+            id: jz53swq00qniu
+          default: true
+          description: 'Show or Hide ApplePay Button on Page. If the merchant does not include the "ShowWallets" object in their request, it will be treated as empty. In such cases, the system will default to the "ShowWallets" configuration as specified in the merchant''s profile settings.'
+        GooglePay:
+          type: boolean
+          x-stoplight:
+            id: ax47lybop5qvm
+          default: true
+          description: 'Show or Hide GooglePay Button on Page. If the merchant does not include the "ShowWallets" object in their request, it will be treated as empty. In such cases, the system will default to the "ShowWallets" configuration as specified in the merchant''s profile settings.'
+    AccountPayoutBalanceResponse:
+      type: object
+      x-examples:
+        Example 1:
+          Balances:
+            Amount: '100'
+            Currency: Eur
+          AccountSpecificData:
+            Key1: Value1
+            Key2: Value2
+      description: This model captures the Payout Balance payload
+      properties:
+        Balances:
+          type: object
+          description: This is the object that captures the basic balance data.
+          properties:
+            Amount:
+              type: number
+              description: Indicates the transaction amount to be processed.
+            Currency:
+              type: string
+              description: Specifies the currency code for the transaction. 3-letter alpha (A-to Z) currency code ISO 4217
+        AccountSpecificData:
+          type: object
+          description: This is the optional object that captures any additional relevant data available by the provider.
+          properties:
+            Key1:
+              type: string
+            Key2:
+              type: string
+        IsSuccess:
+          type: boolean
+          x-stoplight:
+            id: echfth47idb1f
+          description: This field indicates whether the request has been successful or not
+        ErrorMessage:
+          type: string
+          x-stoplight:
+            id: fklpr2ohtf15b
+          description: This field captures the error message if an error encountered
+    BasicResponseObject:
+      type: object
+      x-examples:
+        Example 1:
+          IsSuccess: false
+          ErrorMessage: No records found
+      properties:
+        IsSuccess:
+          type: boolean
+          description: This field indicates whether the request has been successful or not
+        ErrorMessage:
+          type: string
+          description: This field captures the error message if an error encountered
+      description: This is the basic response object for a non HTTP 200 response
+  securitySchemes:
+    ClientCredentials:
+      type: http
+      scheme: basic
+      description: 'A Basic Auth Credential which is based on a concatenated ClientID and ClientSecret split by a colon (e.g., "ClientID:ClientSecret"). The Base64 encoded string will serve as your credentials.https://docs.apcopay.com/docs/basic-auth-signature-calculation'
+tags:
+  - name: Hosted Payment Page
+    description: This section contains all the operations permitted around the Hosted Page Functionality
+  - name: Payment Operations
+    description: 'This section contains all the operations permitted around the Server to Server Payment Functionality. NOTE:\ Some Operations would require the merchant to be PCI DSS Certified.'
+  - name: Tokenisation
+    description: This section contains all the operations permitted around the Card Tokenisation Functionality
+  - name: Transaction Data
+    description: This section contains all the operations to reteive Payment related information.
+  - name: Balances
+    description: This section contains all the operations to reteive Balance related information.
+security:
+  - ClientCredentials: []
